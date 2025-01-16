@@ -19,6 +19,12 @@ body {
   font-family: 'Poppins', serif;
   color: #ffff;
 }
+
+.hidden {
+  display: none;
+}
+
+/* .....style...... */
 .logo-img {
   max-width: 3rem;
 }
@@ -39,4 +45,13 @@ body {
 .text-area p {
   color: black;
   font-weight: 600;
+}
+.card-display {
+  background: inherit;
+}
+.card {
+  background-color: transparent;
+}
+.deck-img {
+  width: 10rem;
 }
