@@ -36,3 +36,7 @@ body {
   max-width: 10rem;
   mix-blend-mode: screen;
 }
+.text-area p {
+  color: black;
+  font-weight: 600;
+}
