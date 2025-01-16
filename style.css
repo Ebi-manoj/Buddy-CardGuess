@@ -32,3 +32,7 @@ body {
   max-width: 6rem;
   filter: drop-shadow(1px 2px 15px rgba(201, 207, 6, 0.8));
 }
+.bubble-img {
+  max-width: 10rem;
+  mix-blend-mode: screen;
+}
