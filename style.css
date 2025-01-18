@@ -21,7 +21,8 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+  visibility: 0;
 }
 
 /* .....style...... */
