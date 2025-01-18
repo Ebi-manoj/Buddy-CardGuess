@@ -15,6 +15,9 @@ const stackTwo = document.querySelector('.stack-2');
 const stackThree = document.querySelector('.stack-3');
 const stackFour = document.querySelector('.stack-4');
 const card16Box = document.querySelector('.card-16-box');
+const btnBox = document.querySelector('.btn-box');
+const btnStack = document.querySelector('.btn-box-stack');
+const stackButtons = document.querySelectorAll('.btn-stack');
 
 // card alignment
 const alignCard = function () {
@@ -25,12 +28,12 @@ const alignCard = function () {
 };
 
 // Buddy message update
-const updateMessage = function (message, btnText) {
+const updateMessage = function (message) {
   comandText.textContent = '';
   comandText.textContent = message;
 };
-
 let data;
+const stacks = [];
 
 // drawing 16cards from the deck
 const drawCard = async function () {
@@ -40,7 +43,11 @@ const drawCard = async function () {
     );
     if (!response.ok) throw new Error();
     data = await response.json();
+    for (i = 0; i < data.cards.length; i += 4) {
+      stacks.push(data.cards.slice(i, i + 4));
+    }
     console.log(data);
+    console.log(stacks);
   } catch (error) {
     console.log(error);
   }
@@ -68,20 +75,36 @@ btnStart.addEventListener('click', function () {
 });
 
 // Stacking the cards in column wise;
-
+const stackContainers = document.querySelectorAll(
+  '.stack-1,.stack-2,.stack-3,.stack-4'
+);
 btnNext.addEventListener('click', function () {
   card16Box.classList.add('hidden');
   cardStack.classList.remove('hidden');
-  stackOne.insertAdjacentHTML(
-    'afterbegin',
-    `
-     <div class="card card-stack">
-                <img
-                  src="https://deckofcardsapi.com/static/img/5D.png"
-                  class="img-fluid deck-img"
-                  alt="card"
-                />
-              </div>
-    `
-  );
+  stacks.forEach((stack, index) => {
+    const stackContainer = stackContainers[index];
+    stack.forEach(card => {
+      stackContainer.insertAdjacentHTML(
+        'beforeend',
+        `
+        <div class="card card-stack">
+            <img
+              src="${card.image}"
+              class="img-fluid deck-img"
+              alt="card"
+            />
+          </div>
+        `
+      );
+    });
+  });
+  updateMessage('Where is Your Card...');
+  btnBox.classList.add('hidden');
+  btnStack.classList.remove('hidden');
 });
+const stackSelection = function () {
+  const stackNumber = this.getAttribute('data-set');
+  console.log(`You clicked Stack ${stackNumber}`);
+};
+
+stackButtons.forEach(btn => btn.addEventListener('click', stackSelection));
