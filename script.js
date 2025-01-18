@@ -5,15 +5,22 @@
 
 const cardContainer = document.querySelector('.card-display');
 const btnStart = document.querySelector('.btn-start');
+const comandText = document.querySelector('.comand-text');
 
 // card alignment
 const alignCard = function () {
-  const cards = document.querySelectorAll('.card');
+  const cards = document.querySelectorAll('.card-16');
   cards.forEach((card, index) => {
     card.style.left = `${index * 5.8}%`;
   });
 };
-alignCard();
+
+// Buddy message update
+const updateMessage = function (message, btnText) {
+  comandText.textContent = '';
+  comandText.textContent = message;
+  btnStart.textContent = btnText;
+};
 
 let data;
 
@@ -33,17 +40,18 @@ const drawCard = async function () {
 drawCard();
 
 // Game starting after clicking start button
-// btnStart.addEventListener('click', function () {
-//   cardContainer.innerHTML = '';
-//   data.cards.forEach(card =>
-//     cardContainer.insertAdjacentHTML(
-//       'afterbegin',
-//       `
-//       <div class="card">
-//           <img src="${card.image}" class="img-fluid deck-img" alt="card" />
-//         </div>
-//     `
-//     )
-//   );
-//   alignCard();
-// });
+btnStart.addEventListener('click', function () {
+  cardContainer.innerHTML = '';
+  data.cards.forEach(card =>
+    cardContainer.insertAdjacentHTML(
+      'afterbegin',
+      `
+      <div class="card card-16">
+          <img src="${card.image}" class="img-fluid deck-img" alt="card" />
+        </div>
+    `
+    )
+  );
+  updateMessage(`Think a card,Don't tell me!`, 'Next');
+  alignCard();
+});
