@@ -74,14 +74,9 @@ btnStart.addEventListener('click', function () {
   alignCard();
 });
 
-// Stacking the cards in column wise;
-const stackContainers = document.querySelectorAll(
-  '.stack-1,.stack-2,.stack-3,.stack-4'
-);
-btnNext.addEventListener('click', function () {
-  card16Box.classList.add('hidden');
-  cardStack.classList.remove('hidden');
-  stacks.forEach((stack, index) => {
+// function for updating stack
+const updateStack = function (stackArray) {
+  stackArray.forEach((stack, index) => {
     const stackContainer = stackContainers[index];
     stack.forEach(card => {
       stackContainer.insertAdjacentHTML(
@@ -98,13 +93,61 @@ btnNext.addEventListener('click', function () {
       );
     });
   });
+};
+
+// Stacking the cards in column wise;
+const stackContainers = document.querySelectorAll(
+  '.stack-1,.stack-2,.stack-3,.stack-4'
+);
+const finalStack = [];
+let firstQuestion = true;
+let firstStackNumber;
+let SecondStackNumber;
+let cardPosition;
+
+btnNext.addEventListener('click', function () {
+  card16Box.classList.add('hidden');
+  cardStack.classList.remove('hidden');
+  updateStack(stacks);
   updateMessage('Where is Your Card...');
   btnBox.classList.add('hidden');
   btnStack.classList.remove('hidden');
 });
-const stackSelection = function () {
-  const stackNumber = this.getAttribute('data-set');
-  console.log(`You clicked Stack ${stackNumber}`);
+
+// stacking first selection of card
+const firtsStackSelection = function (button) {
+  firstQuestion = false;
+  firstStackNumber = button.getAttribute('data-set');
+  stacks.forEach(stack => {
+    stack.forEach((card, index) => {
+      if (!finalStack[index]) {
+        finalStack[index] = [];
+      }
+
+      finalStack[index].push(card);
+    });
+  });
+  // clearing the stack container and ready to insert another stack
+  stackContainers.forEach(stack => (stack.innerHTML = ''));
+  // update stack
+  updateMessage('Final question..Where is now?');
+  updateStack(finalStack);
+  console.log(finalStack);
 };
 
-stackButtons.forEach(btn => btn.addEventListener('click', stackSelection));
+// selecting the 2nd question
+
+const secondStackSelection = function (button) {
+  SecondStackNumber = button.getAttribute('data-set');
+  cardPosition = finalStack[SecondStackNumber - 1][firstStackNumber - 1];
+  updateMessage('Hm...thinking..I got it  Hahaha');
+
+  console.log(cardPosition);
+};
+
+stackButtons.forEach(btn =>
+  btn.addEventListener('click', function () {
+    if (firstQuestion) firtsStackSelection(this);
+    else secondStackSelection(this);
+  })
+);
