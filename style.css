@@ -103,6 +103,19 @@ body {
   position: absolute;
   left: 200%;
 }
+.btn-wrapper a {
+  display: inline-block;
+  text-decoration: none;
+}
+.restart-btn {
+  font-size: 1rem;
+  color: white;
+  text-decoration: underline;
+  transition: all 0.2s;
+}
+.restart-btn:hover {
+  color: #e2e2e2;
+}
 /* media Queries */
 
 @media only screen and (min-width: 600px) {
