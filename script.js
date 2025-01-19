@@ -140,9 +140,33 @@ const firtsStackSelection = function (button) {
 const secondStackSelection = function (button) {
   SecondStackNumber = button.getAttribute('data-set');
   cardPosition = finalStack[SecondStackNumber - 1][firstStackNumber - 1];
-  updateMessage('Hm...thinking..I got it  Hahaha');
+  updateMessage('Hm...thinking..I got it Hahaha');
+  cardStack.classList.add('hidden');
+  btnStack.classList.add('hidden');
+  cardSingle.classList.remove('hidden');
+  const img = document.querySelector('.deck-img');
+  const tl = gsap.timeline(); // Create a GSAP timeline
 
-  console.log(cardPosition);
+  tl.to(img, {
+    duration: 0,
+    scale: 0,
+  })
+    .to(img, {
+      duration: 4,
+      scale: 1,
+    })
+    .to(img, {
+      duration: 0.5,
+      scaleX: 0, // Flip horizontally
+      onComplete: () => {
+        img.src = cardPosition.image;
+        updateMessage('Your Card is....');
+      },
+    })
+    .to(img, {
+      duration: 0.5,
+      scaleX: 1,
+    });
 };
 
 stackButtons.forEach(btn =>
